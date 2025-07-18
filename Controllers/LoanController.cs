@@ -2,6 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
 using System.IO;
 using LoanCalculatorApp.Models;
+using System;
+using System.Collections.Generic;
+
+
 
 namespace LoanCalculatorApp.Controllers
 {
