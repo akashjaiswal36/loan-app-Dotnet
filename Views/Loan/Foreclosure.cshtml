@@ -1,0 +1,39 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head><title>Foreclosure</title></head>
+<body>
+    <h2>Loan Foreclosure Calculator</h2>
+    <form method="post" action="/Loan/CalculateForeclosure">
+        <label>Principal:</label><br />
+        <input name="principal" type="number" step="0.01" required /><br /><br />
+
+        <label>Interest Rate (annual):</label><br />
+        <input name="rate" type="number" step="0.01" required /><br /><br />
+
+        <label>Tenure (months):</label><br />
+        <input name="months" type="number" required /><br /><br />
+
+        <label>Foreclosure Month:</label><br />
+        <input name="forecloseMonth" type="number" required /><br /><br />
+
+        <input type="submit" value="Calculate Foreclosure" />
+    </form>
+
+    @if (ViewBag.Total != null)
+    {
+        <h3>Foreclosure Summary (Month @ViewBag.Month)</h3>
+        <ul>
+            <li>Remaining Balance: ₹@ViewBag.Remaining</li>
+            <li>Foreclosure Charge (4%): ₹@ViewBag.Charge</li>
+            <li>GST (18%): ₹@ViewBag.GST</li>
+            <li><strong>Total: ₹@ViewBag.Total</strong></li>
+        </ul>
+    }
+
+    <br />
+    <a href="/Loan/Index">⬅ Back to Main Page</a>
+</body>
+</html>
