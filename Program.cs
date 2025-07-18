@@ -4,15 +4,13 @@ using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
-// Bind to all network interfaces (not just localhost)
+// ✅ THIS is the correct way to bind to all IPs and set port
 builder.WebHost.UseUrls("http://0.0.0.0:5000");
+
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
