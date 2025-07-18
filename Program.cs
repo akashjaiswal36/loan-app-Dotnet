@@ -2,22 +2,27 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-var builder = WebApplication.CreateBuilder(args);
+// Create the builder
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    Args = args,
+    // ✅ Correct way to bind to all interfaces on port 5000
+    Urls = new[] { "http://0.0.0.0:5000" }
+});
 
-// ✅ THIS is the correct way to bind to all IPs and set port
-builder.WebHost.UseUrls("http://0.0.0.0:5000");
-
+// Add services
 builder.Services.AddControllersWithViews();
 
+// Build the app
 var app = builder.Build();
 
+// Configure the middleware
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
 }
 
 app.UseStaticFiles();
-
 app.UseRouting();
 
 app.MapControllerRoute(
