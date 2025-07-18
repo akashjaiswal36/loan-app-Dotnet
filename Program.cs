@@ -2,29 +2,31 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-// Create the builder
-var builder = WebApplication.CreateBuilder(new WebApplicationOptions
-{
-    Args = args,
-    // ✅ Correct way to bind to all interfaces on port 5000
-    Urls = new[] { "http://0.0.0.0:5000" }
-});
+var builder = WebApplication.CreateBuilder(args);
 
-// Add services
+// Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Build the app
+// Set the app to listen on all IPs (0.0.0.0) and port 5000
+builder.WebHost.UseUrls("http://0.0.0.0:5000");
+
 var app = builder.Build();
 
-// Configure the middleware
+// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
 }
 
+app.UseHttpsRedirection();
 app.UseStaticFiles();
+
 app.UseRouting();
 
+app.UseAuthorization();
+
+// Default route setup
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Loan}/{action=Index}/{id?}");
