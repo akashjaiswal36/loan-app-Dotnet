@@ -3,6 +3,13 @@ name: Docker Image CI
 on:
   push:
     branches: [ "main" ]
+    paths-ignore:
+      - "original_manifest/**"
+      - "manifests/**"
+      - "README.md"
+
+permissions:
+  contents: write
 
 jobs:
 
@@ -28,12 +35,7 @@ jobs:
 
     - name: Checkout source code
       uses: actions/checkout@v4   
-
-    - name: login to github container registry
-      uses: docker/login-action@v3
       with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
           password: ${{ secrets.TOKEN }}
 
      
